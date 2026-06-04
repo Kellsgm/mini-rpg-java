@@ -1,23 +1,30 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Personagem {
 
-	private String nome; 
-	private int vida; 
+	private String nome;
+	private int vida;
 	private int vidaMaxima;
 	private int danoMinimo;
-	private int danoMaximo; 
-	private int forca; 
-	private int defesa; 
-	
-	public Personagem(String nome, int vidaMaxima, int danoMinimo, int danoMaximo, int forca, int defesa) {
-		this.nome = nome; 
+	private int danoMaximo;
+	private int forca;
+	private int defesa;
+	private int moedas; 
+	private Item itemEquipado;
+	private ArrayList<Item> inventario;
+
+	public Personagem(String nome, int vidaMaxima, int danoMinimo, int danoMaximo, int forca, int defesa, int moedas) {
+		this.nome = nome;
 		this.vida = vidaMaxima;
 		this.vidaMaxima = vidaMaxima;
 		this.danoMaximo = danoMaximo;
 		this.danoMinimo = danoMinimo;
 		this.forca = forca;
 		this.defesa = defesa;
+		this.moedas = moedas;
+		inventario = new ArrayList<>();
 	}
 
 	public String getNome() {
@@ -59,7 +66,7 @@ public class Personagem {
 	public void setDanoMaximo(int danoMaximo) {
 		this.danoMaximo = danoMaximo;
 	}
-	
+
 	public int getForca() {
 		return forca;
 	}
@@ -75,21 +82,56 @@ public class Personagem {
 	public void setDefesa(int defesa) {
 		this.defesa = defesa;
 	}
-
+	public ArrayList<Item> getInventario() {
+	    return inventario;
+	}
+	public int getMoedas (int moedas) {
+		return moedas;
+	}
 	public boolean estaVivo() {
 		return vida > 0;
-		
+
 	}
-	
+
 	public void receberDano(int dano) {
 		vida -= dano;
 		if (vida < 0) {
 			vida = 0;
 		}
 	}
-	public void curar (int quantidade) {
+
+	public void curar(int quantidade) {
 		vida += quantidade;
 		if (vida > vidaMaxima) {
 			vida = vidaMaxima;
 		}
-	}}
+	}
+
+	public void adicionarItem(Item item) {
+		inventario.add(item);
+	}
+
+	public void removerItem(Item item) {
+		inventario.remove(item);
+	}
+
+	public void equiparItem(Item item) {
+		this.itemEquipado = item;
+	}
+
+	public Item getItemEquipado() {
+		return itemEquipado;
+	}
+	public void ganharMoedas(int quantidade) {
+	    moedas += quantidade;
+	}
+
+	public boolean gastarMoedas(int quantidade) {
+	    if (moedas >= quantidade) {
+	        moedas -= quantidade;
+	        return true;
+	    }
+	    return false;
+	}
+
+}

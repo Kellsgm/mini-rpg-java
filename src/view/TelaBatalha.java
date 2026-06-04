@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -21,19 +20,24 @@ public class TelaBatalha extends JFrame {
 	private JLabel lblMensagem;
 	private JLabel lblVidaHeroina;
 	private JLabel lblVidaBoss;
-	private Personagem heroi;
+	private Personagem heroina;
 	private Personagem boss;
 	private BatalhaService batalhaService;
-
+	private JButton btnAtacar;
+	private JButton btnCurar;
+	private JButton btnDefender;
+	private int pocoes = 3;
+	private JButton btnVoltar;
 	/**
 	 * Launch the application.
 	 */
+	// Método usado apenas para testes da TelaBatalha
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Personagem heroiTeste = new Personagem("Arqueira", 35, 5, 6, 6, 5);
-					Personagem boss = new Personagem("Carrasco", 40, 5, 5, 5, 5);
+					Personagem heroiTeste = new Personagem("Arqueira", 35, 5, 6, 6, 5, 15);
+					Personagem boss = new Personagem("Carrasco", 40, 5, 5, 5, 5, 0);
 					TelaBatalha frame = new TelaBatalha(heroiTeste);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,63 +49,85 @@ public class TelaBatalha extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaBatalha(Personagem heroi) {
-		this.heroi = heroi;
+	public TelaBatalha(Personagem heroina) {
+		this.heroina = heroina;
 
-		this.boss = new Personagem("Carrasco", 40, 40, 4, 8, 4);
+		this.boss = new Personagem("Carrasco", 50, 6, 10, 8, 6, 0);
 		this.batalhaService = new BatalhaService();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 349);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JButton btnAtacar = new JButton("Atacar");
+		btnAtacar = new JButton("Atacar");
 		btnAtacar.setBounds(45, 145, 89, 23);
+
 		btnAtacar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String mensagem = batalhaService.atacar(heroi, boss);
-				lblMensagem.setText("TESTE");
 
-//				if (boss.estaVivo()) {
-//				    String mensagemBoss = BatalhaService.atacar(boss, heroi);
-//				    lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "</html>");
-//				} else {
-//				    lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!</html>");
-//				}
-
+				String mensagem = batalhaService.atacar(heroina, boss);
+				System.out.println("Boss atacou! Vida heroi: " + heroina.getVida());
 				atualizarTela();
+
+				if (!boss.estaVivo()) {
+					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!</html>");
+					desativarBotoes();
+					heroina.ganharMoedas(10);
+					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!<br>Você ganhou 10 moedas!</html>");
+					return;
+				}
+
+				String mensagemBoss = batalhaService.atacar(boss, heroina);
+				atualizarTela();
+
+				if (!heroina.estaVivo()) {
+					lblMensagem.setText(
+							"<html>" + mensagem + "<br>" + mensagemBoss + "<br>" + heroina.getNome() + " morreu!</html>");
+					desativarBotoes();
+					return;
+				}
+
+				lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "</html>");
 			}
 		});
 		contentPane.setLayout(null);
 		contentPane.add(btnAtacar);
 
-		JButton btnCurar = new JButton("Curar");
+		btnCurar = new JButton("Curar");
 		btnCurar.setBounds(178, 145, 89, 23);
 		btnCurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 String mensagemCura = BatalhaService.curar(heroi);
-			        lblMensagem.setText(mensagemCura);
-			        atualizarTela();
+				String mensagemCura = curarHeroi();
+				lblMensagem.setText(mensagemCura);
+				atualizarTela();
 
 			}
 		});
 		contentPane.add(btnCurar);
 
-		JButton btnDefender = new JButton("Defender");
+		btnDefender = new JButton("Defender");
 		btnDefender.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String mensagemDefender = BatalhaService.defender(heroi, boss);
-				lblMensagem.setText(mensagemDefender);
-				atualizarTela();
-			}
+		    public void actionPerformed(ActionEvent e) {
+
+		        String mensagemDefender = BatalhaService.defender(boss, heroina);
+		        atualizarTela();
+
+		        if (!heroina.estaVivo()) {
+		            lblMensagem.setText("<html>" + mensagemDefender + "<br>" + heroina.getNome() + " morreu!</html>");
+		            desativarBotoes();
+		            return;
+		        }
+
+		        lblMensagem.setText("<html>" + mensagemDefender + "</html>");
+		    }
 		});
 		btnDefender.setBounds(309, 145, 89, 23);
 		contentPane.add(btnDefender);
 
 		lblVidaHeroina = new JLabel("Vida da heroina: ");
-		lblVidaHeroina.setText("Vida da heroína: " + heroi.getVida() + "/" + heroi.getVidaMaxima());
+		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
 		lblVidaHeroina.setBounds(45, 48, 149, 14);
 		contentPane.add(lblVidaHeroina);
 
@@ -111,13 +137,45 @@ public class TelaBatalha extends JFrame {
 		contentPane.add(lblVidaBoss);
 
 		lblMensagem = new JLabel("");
-		lblMensagem.setBounds(20, 180, 400, 80);
+		lblMensagem.setBounds(45, 180, 317, 80);
 		contentPane.add(lblMensagem);
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicial telaInicial = new TelaInicial();
+				telaInicial.setVisible(true);
+			}
+		});
+		btnVoltar.setBounds(10, 276, 89, 23);
+		contentPane.add(btnVoltar);
 	}
 
 	private void atualizarTela() {
-		lblVidaHeroina.setText("Vida da heroína: " + heroi.getVida() + "/" + heroi.getVidaMaxima());
+		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
 		lblVidaBoss.setText("Vida da boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
+	}
+
+	private void desativarBotoes() {
+		btnAtacar.setEnabled(false);
+		btnCurar.setEnabled(false);
+		btnDefender.setEnabled(false);
+
+	}
+	private String curarHeroi() {
+	    if (heroina.getVida() == heroina.getVidaMaxima()) {
+	        return heroina.getNome() + " já está com a vida cheia!";
+	    }
+
+	    if (pocoes <= 0) {
+	        return "Você não tem mais poções!";
+	    }
+
+	    int cura = 5;
+	    heroina.curar(cura);
+	    pocoes--;
+
+	    return heroina.getNome() + " recuperou " + cura + " de vida! Poções restantes: " + pocoes;
 	}
 
 }

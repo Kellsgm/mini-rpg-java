@@ -13,6 +13,7 @@ public class BatalhaService {
 		int dano = random.nextInt(atacante.getDanoMaximo() - atacante.getDanoMinimo() + 1) + atacante.getDanoMinimo();
 		if (chanceCritico <= 9) {
 			defensor.receberDano(dano);
+			
 			return atacante.getNome() + " atacou " + defensor.getNome() + " causando " + dano + " de dano!";
 		} else {
 			int danocritico = dano * 2;
@@ -146,13 +147,16 @@ public class BatalhaService {
 		}
 	}
 	public static String curar(Personagem personagem) {
+	 
 	    if (personagem.getVida() == personagem.getVidaMaxima()) {
 	        return personagem.getNome() + " já está com a vida cheia!";
 	    }
+
 	    int cura = random.nextInt(4) + 3;
-	personagem.curar(cura);
-	    
+	    personagem.curar(cura);
+
 
 	    return personagem.getNome() + " recuperou vida!";
 	}
+	
 }
