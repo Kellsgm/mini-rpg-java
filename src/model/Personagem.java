@@ -11,7 +11,8 @@ public class Personagem {
 	private int danoMaximo;
 	private int forca;
 	private int defesa;
-	private int moedas; 
+	private int moedas;
+	private int id;
 	private Item itemEquipado;
 	private ArrayList<Item> inventario;
 
@@ -82,12 +83,27 @@ public class Personagem {
 	public void setDefesa(int defesa) {
 		this.defesa = defesa;
 	}
+
 	public ArrayList<Item> getInventario() {
-	    return inventario;
+		return inventario;
 	}
-	public int getMoedas (int moedas) {
+
+	public int getMoedas() {
 		return moedas;
+
 	}
+
+	public void setMoedas(int moedas) {
+		this.moedas = moedas;
+	}
+	public int getId() {
+	    return id;
+	}
+
+	public void setId(int id) {
+	    this.id = id;
+	}
+
 	public boolean estaVivo() {
 		return vida > 0;
 
@@ -122,16 +138,17 @@ public class Personagem {
 	public Item getItemEquipado() {
 		return itemEquipado;
 	}
+
 	public void ganharMoedas(int quantidade) {
-	    moedas += quantidade;
+		moedas += quantidade;
 	}
 
 	public boolean gastarMoedas(int quantidade) {
-	    if (moedas >= quantidade) {
-	        moedas -= quantidade;
-	        return true;
-	    }
-	    return false;
+		if (moedas >= quantidade) {
+			moedas -= quantidade;
+			return true;
+		}
+		return false;
 	}
 
 }

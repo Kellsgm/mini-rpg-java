@@ -3,17 +3,19 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import dao.PersonagemDAO;
 import model.Personagem;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TelaInventario extends JFrame {
 
@@ -47,6 +49,7 @@ public class TelaInventario extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(100, 91, 98));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,6 +100,30 @@ public class TelaInventario extends JFrame {
 		contentPane.add(btnVoltar);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			    if (heroina == null) {
+			        JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
+			        return;
+			    }
+
+			    PersonagemDAO dao = new PersonagemDAO();
+			    boolean sucesso;
+
+			    if (heroina.getId() == 0) {
+			        sucesso = dao.salvar(heroina);
+			    } else {
+			        sucesso = dao.atualizar(heroina);
+			    }
+
+			    if (sucesso) {
+			        JOptionPane.showMessageDialog(null, "Personagem salvo com sucesso!");
+			    } else {
+			        JOptionPane.showMessageDialog(null, "Erro ao salvar personagem!");
+			    }
+			}
+		});
 		btnSalvar.setBounds(230, 215, 89, 23);
 		contentPane.add(btnSalvar);
 

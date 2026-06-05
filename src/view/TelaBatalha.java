@@ -26,8 +26,12 @@ public class TelaBatalha extends JFrame {
 	private JButton btnAtacar;
 	private JButton btnCurar;
 	private JButton btnDefender;
+	private JButton btnEspecial;
+	private boolean especialUsado = false;
 	private int pocoes = 3;
 	private JButton btnVoltar;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -57,12 +61,13 @@ public class TelaBatalha extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 349);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		btnAtacar = new JButton("Atacar");
-		btnAtacar.setBounds(45, 145, 89, 23);
+		btnAtacar.setBounds(28, 145, 89, 23);
 
 		btnAtacar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +80,8 @@ public class TelaBatalha extends JFrame {
 					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!</html>");
 					desativarBotoes();
 					heroina.ganharMoedas(10);
-					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!<br>Você ganhou 10 moedas!</html>");
+					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome()
+							+ " morreu!<br>Você ganhou 10 moedas!</html>");
 					return;
 				}
 
@@ -83,8 +89,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText(
-							"<html>" + mensagem + "<br>" + mensagemBoss + "<br>" + heroina.getNome() + " morreu!</html>");
+					lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "<br>" + heroina.getNome()
+							+ " morreu!</html>");
 					desativarBotoes();
 					return;
 				}
@@ -96,7 +102,7 @@ public class TelaBatalha extends JFrame {
 		contentPane.add(btnAtacar);
 
 		btnCurar = new JButton("Curar");
-		btnCurar.setBounds(178, 145, 89, 23);
+		btnCurar.setBounds(226, 145, 89, 23);
 		btnCurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensagemCura = curarHeroi();
@@ -109,21 +115,21 @@ public class TelaBatalha extends JFrame {
 
 		btnDefender = new JButton("Defender");
 		btnDefender.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 
-		        String mensagemDefender = BatalhaService.defender(boss, heroina);
-		        atualizarTela();
+				String mensagemDefender = BatalhaService.defender(boss, heroina);
+				atualizarTela();
 
-		        if (!heroina.estaVivo()) {
-		            lblMensagem.setText("<html>" + mensagemDefender + "<br>" + heroina.getNome() + " morreu!</html>");
-		            desativarBotoes();
-		            return;
-		        }
+				if (!heroina.estaVivo()) {
+					lblMensagem.setText("<html>" + mensagemDefender + "<br>" + heroina.getNome() + " morreu!</html>");
+					desativarBotoes();
+					return;
+				}
 
-		        lblMensagem.setText("<html>" + mensagemDefender + "</html>");
-		    }
+				lblMensagem.setText("<html>" + mensagemDefender + "</html>");
+			}
 		});
-		btnDefender.setBounds(309, 145, 89, 23);
+		btnDefender.setBounds(325, 145, 89, 23);
 		contentPane.add(btnDefender);
 
 		lblVidaHeroina = new JLabel("Vida da heroina: ");
@@ -137,18 +143,53 @@ public class TelaBatalha extends JFrame {
 		contentPane.add(lblVidaBoss);
 
 		lblMensagem = new JLabel("");
-		lblMensagem.setBounds(45, 180, 317, 80);
+		lblMensagem.setBounds(38, 185, 317, 80);
 		contentPane.add(lblMensagem);
-		
+
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial telaInicial = new TelaInicial();
+				TelaInicial telaInicial = new TelaInicial(heroina);
 				telaInicial.setVisible(true);
 			}
 		});
 		btnVoltar.setBounds(10, 276, 89, 23);
 		contentPane.add(btnVoltar);
+
+		btnEspecial = new JButton("Especial");
+		btnEspecial.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+
+		        if (especialUsado) {
+		            lblMensagem.setText("Você já usou o especial nessa batalha!");
+		            return;
+		        }
+
+		        String mensagemEspecial = BatalhaService.especial(heroina, boss);
+		        especialUsado = true;
+		        atualizarTela();
+
+		        if (!boss.estaVivo()) {
+		            lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + boss.getNome() + " morreu!</html>");
+		            desativarBotoes();
+		            return;
+		        }
+
+		        String mensagemBoss = batalhaService.atacar(boss, heroina);
+		        atualizarTela();
+
+		        if (!heroina.estaVivo()) {
+		            lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "<br>" + heroina.getNome() + " morreu!</html>");
+		            desativarBotoes();
+		            return;
+		        }
+
+		        lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "</html>");
+		    }
+		   
+		});
+		btnEspecial.setBounds(127, 145, 89, 23);
+		contentPane.add(btnEspecial);
 	}
 
 	private void atualizarTela() {
@@ -160,22 +201,24 @@ public class TelaBatalha extends JFrame {
 		btnAtacar.setEnabled(false);
 		btnCurar.setEnabled(false);
 		btnDefender.setEnabled(false);
+		btnEspecial.setEnabled(false);
 
 	}
+
 	private String curarHeroi() {
-	    if (heroina.getVida() == heroina.getVidaMaxima()) {
-	        return heroina.getNome() + " já está com a vida cheia!";
-	    }
+		if (heroina.getVida() == heroina.getVidaMaxima()) {
+			return heroina.getNome() + " já está com a vida cheia!";
+		}
 
-	    if (pocoes <= 0) {
-	        return "Você não tem mais poções!";
-	    }
+		if (pocoes <= 0) {
+			return "Você não tem mais poções!";
+		}
 
-	    int cura = 5;
-	    heroina.curar(cura);
-	    pocoes--;
+		int cura = 5;
+		heroina.curar(cura);
+		pocoes--;
 
-	    return heroina.getNome() + " recuperou " + cura + " de vida! Poções restantes: " + pocoes;
+		return heroina.getNome() + " recuperou " + cura + " de vida! Poções restantes: " + pocoes;
 	}
 
 }

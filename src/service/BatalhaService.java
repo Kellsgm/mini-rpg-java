@@ -22,6 +22,11 @@ public class BatalhaService {
 					+ " de dano!";
 		}
 	}
+	public static String especial(Personagem atacante, Personagem defensor) {
+		int dano = atacante.getDanoMaximo() * 2;
+		defensor.receberDano(dano);
+	return atacante.getNome() + "deu um golpe especial e causou " + dano + " de danos!";
+	}
 
 	public static void mostrarStatus(Personagem personagem) {
 		System.out

@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import model.Item;
+import dao.PersonagemDAO;
 import model.Personagem;
 import model.PersonagemFactory;
 
@@ -41,10 +41,16 @@ public class TelaInicial extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
 	 */
+	public TelaInicial(Personagem heroina) {
+	    this();
+	    this.heroina = heroina;
+	}
 	public TelaInicial() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 575, 356);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,8 +73,7 @@ public class TelaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				 heroina = PersonagemFactory.criarArqueira();
 				JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhida!");
-				TelaInicial telaInicial = new TelaInicial();
-				telaInicial.setVisible(true);
+			
 				
 			}
 		});
@@ -100,6 +105,7 @@ public class TelaInicial extends JFrame {
 				    JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
 				    return;
 				}
+				heroina.setVida(heroina.getVidaMaxima());
 				TelaBatalha telaBatalha = new TelaBatalha(heroina);
 				telaBatalha.setVisible(true);
 			
@@ -125,6 +131,30 @@ public class TelaInicial extends JFrame {
 		contentPane.add(btnInventario);
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			    if (heroina == null) {
+			        JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
+			        return;
+			    }
+
+			    PersonagemDAO dao = new PersonagemDAO();
+			    boolean sucesso;
+
+			    if (heroina.getId() == 0) {
+			        sucesso = dao.salvar(heroina);
+			    } else {
+			        sucesso = dao.atualizar(heroina);
+			    }
+
+			    if (sucesso) {
+			        JOptionPane.showMessageDialog(null, "Personagem salvo com sucesso!");
+			    } else {
+			        JOptionPane.showMessageDialog(null, "Erro ao salvar personagem!");
+			    }
+			}
+		});
 		btnSalvar.setBounds(356, 257, 113, 23);
 		contentPane.add(btnSalvar);
 
