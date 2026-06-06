@@ -9,18 +9,33 @@ public class BatalhaService {
 	private static Random random = new Random();
 
 	public static String atacar(Personagem atacante, Personagem defensor) {
-		int chanceCritico = random.nextInt(10) + 1;
-		int dano = random.nextInt(atacante.getDanoMaximo() - atacante.getDanoMinimo() + 1) + atacante.getDanoMinimo();
-		if (chanceCritico <= 9) {
-			defensor.receberDano(dano);
-			
-			return atacante.getNome() + " atacou " + defensor.getNome() + " causando " + dano + " de dano!";
-		} else {
-			int danocritico = dano * 2;
-			defensor.receberDano(danocritico);
-			return atacante.getNome() + " atacou com dano critico " + defensor.getNome() + " causando " + danocritico
-					+ " de dano!";
-		}
+	    int chanceCritico = random.nextInt(10) + 1;
+
+	    int dano = random.nextInt(atacante.getDanoMaximo() - atacante.getDanoMinimo() + 1) 
+	            + atacante.getDanoMinimo();
+
+	    int bonusItem = 0;
+
+	    if (atacante.getItemEquipado() != null 
+	            && atacante.getItemEquipado().getTipo().equalsIgnoreCase("Ataque")) {
+	        bonusItem = atacante.getItemEquipado().getValor();
+	    }
+
+	    dano = dano + atacante.getForca() + bonusItem;
+
+	    if (chanceCritico <= 9) {
+	        defensor.receberDano(dano);
+
+	        return atacante.getNome() + " atacou " + defensor.getNome() 
+	                + " causando " + dano + " de dano!";
+	    } else {
+	        int danoCritico = dano * 2;
+	        defensor.receberDano(danoCritico);
+
+	        return atacante.getNome() + " atacou com dano crítico " 
+	                + defensor.getNome() + " causando " + danoCritico + " de dano!";
+	    }
+	
 	}
 	public static String especial(Personagem atacante, Personagem defensor) {
 		int dano = atacante.getDanoMaximo() * 2;

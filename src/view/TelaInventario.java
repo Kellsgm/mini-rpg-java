@@ -96,8 +96,10 @@ public class TelaInventario extends JFrame {
 		lblEquipado = new JLabel("Equipado: " + mostrarItemEquipado());
 		lblEquipado.setBounds(28, 198, 350, 14);
 		contentPane.add(lblEquipado);
+		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(51, 227, 89, 23);
+		
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaInicial telaInicial = new TelaInicial();
@@ -157,7 +159,9 @@ public class TelaInventario extends JFrame {
 		btnEqipar.setBounds(162, 227, 89, 23);
 		contentPane.add(btnEqipar);
 		carregarInventario();
+	
 	}
+
 	private void carregarInventario() {
 	    comboArmas.removeAllItems();
 	    comboArmaduras.removeAllItems();

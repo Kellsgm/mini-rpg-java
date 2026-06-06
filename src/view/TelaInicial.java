@@ -57,47 +57,6 @@ public class TelaInicial extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnMaga = new JButton("Maga");
-		btnMaga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			 heroina = PersonagemFactory.criarMaga();
-				JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhida!");
-
-			}
-		});
-		btnMaga.setBounds(213, 156, 122, 23);
-		contentPane.add(btnMaga);
-
-		JButton btnArqueira = new JButton("Arqueira");
-		btnArqueira.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 heroina = PersonagemFactory.criarArqueira();
-				JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhida!");
-			
-				
-			}
-		});
-		btnArqueira.setBounds(213, 88, 122, 23);
-		btnArqueira.setVerticalAlignment(SwingConstants.BOTTOM);
-		contentPane.add(btnArqueira);
-
-		JButton btnGuerreiro = new JButton("Guerreiro");
-		btnGuerreiro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			 heroina = PersonagemFactory.criarGuerreira();
-				JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhida!");
-				
-			}
-		});
-		btnGuerreiro.setBounds(213, 122, 122, 23);
-		contentPane.add(btnGuerreiro);
-
-		JTextArea txtrSelecioneAClasse = new JTextArea();
-		txtrSelecioneAClasse.setBackground(new Color(255, 255, 255));
-		txtrSelecioneAClasse.setText("Selecione a classe do seu personagem: ");
-		txtrSelecioneAClasse.setBounds(108, 47, 350, 22);
-		contentPane.add(txtrSelecioneAClasse);
-
 		JButton btnBatalha = new JButton("Batalha");
 		btnBatalha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -111,7 +70,7 @@ public class TelaInicial extends JFrame {
 			
 			}
 		});
-		btnBatalha.setBounds(92, 257, 122, 23);
+		btnBatalha.setBounds(224, 126, 122, 23);
 		contentPane.add(btnBatalha);
 
 		JButton btnInventario = new JButton("Inventário");
@@ -127,7 +86,7 @@ public class TelaInicial extends JFrame {
 
 			}
 		});
-		btnInventario.setBounds(224, 257, 122, 23);
+		btnInventario.setBounds(224, 159, 122, 23);
 		contentPane.add(btnInventario);
 
 		JButton btnSalvar = new JButton("Salvar");
@@ -155,8 +114,29 @@ public class TelaInicial extends JFrame {
 			    }
 			}
 		});
-		btnSalvar.setBounds(356, 257, 113, 23);
+		btnSalvar.setBounds(224, 192, 122, 23);
 		contentPane.add(btnSalvar);
+		
+		JButton btnPersonagens = new JButton("Personagens");
+		btnPersonagens.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPersonagens telaPersonagens = new TelaPersonagens();
+				telaPersonagens.setVisible(true);				
+				
+			}
+		});
+		btnPersonagens.setBounds(224, 63, 122, 20);
+		contentPane.add(btnPersonagens);
+		
+		JButton btnLoja = new JButton("Loja");
+		btnLoja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaLoja telaLoja = new TelaLoja();
+				telaLoja.setVisible(true);
+			}
+		});
+		btnLoja.setBounds(224, 96, 122, 20);
+		contentPane.add(btnLoja);
 
 	}
 }

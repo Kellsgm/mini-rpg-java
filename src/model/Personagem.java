@@ -144,11 +144,13 @@ public class Personagem {
 	}
 
 	public boolean gastarMoedas(int quantidade) {
-		if (moedas >= quantidade) {
-			moedas -= quantidade;
-			return true;
-		}
-		return false;
+	    if (moedas >= quantidade) {
+	        moedas -= quantidade;
+	        return true;
+	    }
+	    return false;
 	}
+	}
+	
 
-}
+

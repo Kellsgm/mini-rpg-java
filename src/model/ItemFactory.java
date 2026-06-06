@@ -4,23 +4,23 @@ public class ItemFactory {
 	
 
 	    public static Item criarArcoLongo() {
-	        return new Item("Arco Longo", "arma", 2);
+	        return new Item("Arco Longo", "arma", 2, 5);
 	    }
 
 	    public static Item criarEspadaCurta() {
-	        return new Item("Espada Curta", "arma", 3);
+	        return new Item("Espada Curta", "arma", 3,5);
 	    }
 
 	    public static Item criarCajado() {
-	        return new Item("Cajado Simples", "arma", 2);
+	        return new Item("Cajado Simples", "arma", 2,5);
 	    }
 
 	    public static Item criarPocaoPequena() {
-	        return new Item("Poção Pequena", "pocao", 10);
+	        return new Item("Poção Pequena", "pocao", 10,4);
 	    }
 
 	    public static Item criarArmaduraCouro() {
-	        return new Item("Armadura de Couro", "armadura", 2);
+	        return new Item("Armadura de Couro", "armadura", 2,4);
 	    }
 	
 

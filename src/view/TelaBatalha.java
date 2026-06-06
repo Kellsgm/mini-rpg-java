@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.Personagem;
 import service.BatalhaService;
+import java.awt.Color;
 
 public class TelaBatalha extends JFrame {
 
@@ -63,6 +64,7 @@ public class TelaBatalha extends JFrame {
 		setBounds(100, 100, 450, 349);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(121, 39, 4));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
@@ -133,16 +135,20 @@ public class TelaBatalha extends JFrame {
 		contentPane.add(btnDefender);
 
 		lblVidaHeroina = new JLabel("Vida da heroina: ");
+		lblVidaHeroina.setForeground(new Color(255, 255, 255));
 		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
 		lblVidaHeroina.setBounds(45, 48, 149, 14);
 		contentPane.add(lblVidaHeroina);
 
 		lblVidaBoss = new JLabel("vida do boss: ");
+		lblVidaBoss.setForeground(new Color(255, 255, 255));
+		lblVidaBoss.setBackground(new Color(255, 255, 255));
 		lblVidaBoss.setText("Vida do boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
 		lblVidaBoss.setBounds(45, 101, 123, 14);
 		contentPane.add(lblVidaBoss);
 
 		lblMensagem = new JLabel("");
+		lblMensagem.setForeground(new Color(255, 255, 255));
 		lblMensagem.setBounds(38, 185, 317, 80);
 		contentPane.add(lblMensagem);
 
