@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,13 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import dao.PersonagemDAO;
 import model.Personagem;
-import model.PersonagemFactory;
 
 public class TelaInicial extends JFrame {
 
@@ -50,13 +48,16 @@ public class TelaInicial extends JFrame {
 	public TelaInicial() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 575, 356);
+		setSize(450, 300);
 		setLocationRelativeTo(null);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new GridBagLayout());
+		
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
+	
 		JButton btnBatalha = new JButton("Batalha");
 		btnBatalha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

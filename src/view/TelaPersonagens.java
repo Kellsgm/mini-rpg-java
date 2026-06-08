@@ -97,6 +97,17 @@ public class TelaPersonagens extends JFrame {
 		});
 		btnMaga.setBounds(190, 206, 170, 20);
 		contentPane.add(btnMaga);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicial telaInicial = new TelaInicial(heroina);
+				telaInicial.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltar.setBounds(10, 293, 89, 23);
+		contentPane.add(btnVoltar);
 
 	}
 }
