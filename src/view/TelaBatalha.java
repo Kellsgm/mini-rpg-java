@@ -1,9 +1,14 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.Personagem;
+import model.PersonagemFactory;
 import service.BatalhaService;
-import java.awt.Color;
 
 public class TelaBatalha extends JFrame {
 
@@ -24,6 +29,7 @@ public class TelaBatalha extends JFrame {
 	private Personagem heroina;
 	private Personagem boss;
 	private BatalhaService batalhaService;
+	private JButton btnJogarNovamente;
 	private JButton btnAtacar;
 	private JButton btnCurar;
 	private JButton btnDefender;
@@ -31,7 +37,6 @@ public class TelaBatalha extends JFrame {
 	private boolean especialUsado = false;
 	private int pocoes = 3;
 	private JButton btnVoltar;
-	
 
 	/**
 	 * Launch the application.
@@ -41,9 +46,12 @@ public class TelaBatalha extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Personagem heroiTeste = new Personagem("Arqueira", 35, 5, 6, 6, 5, 15);
-					Personagem boss = new Personagem("Carrasco", 40, 5, 5, 5, 5, 0);
+
+					Personagem heroiTeste = PersonagemFactory.criarArqueira("Bianca");
+					Personagem boss = new Personagem("Carrasco", "Boss", 40, 5, 5, 5, 5, 0);
+
 					TelaBatalha frame = new TelaBatalha(heroiTeste);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,20 +65,66 @@ public class TelaBatalha extends JFrame {
 	public TelaBatalha(Personagem heroina) {
 		this.heroina = heroina;
 
-		this.boss = new Personagem("Carrasco", 50, 6, 10, 8, 6, 0);
+		this.boss = new Personagem("Carrasco", "Boss", 50, 6, 10, 8, 6, 0);
 		this.batalhaService = new BatalhaService();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 349);
+
+		setSize(866, 643);
 		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(121, 39, 4));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new GridBagLayout());
+
 		setContentPane(contentPane);
 
-		btnAtacar = new JButton("Atacar");
-		btnAtacar.setBounds(28, 145, 89, 23);
+		JPanel painelCentro = new JPanel();
+		JPanel painelNavegacao = new JPanel();
+		painelNavegacao.setBackground(new Color(121, 39, 4));
+		JPanel painelStatus = new JPanel();
+		painelStatus.setBackground(new Color(121, 39, 4));
+		JPanel painelAcoes = new JPanel();
+		painelAcoes.setBackground(new Color(121, 39, 4));
+		
+		contentPane.add(painelCentro);
 
+		painelCentro.add(painelStatus);
+		painelCentro.add(painelAcoes);
+		painelCentro.add(Box.createVerticalGlue());
+		painelCentro.add(painelNavegacao);
+		painelCentro.setOpaque(false);
+		
+		painelCentro.setLayout(new BoxLayout(painelCentro, BoxLayout.Y_AXIS));
+
+		
+		// ====== PAINEL STATUS =======
+		
+		lblVidaHeroina = new JLabel("Vida da heroina: ");
+		lblVidaHeroina.setForeground(new Color(255, 255, 255));
+		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
+		lblVidaHeroina.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelStatus.add(lblVidaHeroina);
+
+		lblVidaBoss = new JLabel("vida do boss: ");
+		lblVidaBoss.setForeground(new Color(255, 255, 255));
+		lblVidaBoss.setBackground(new Color(255, 255, 255));
+		lblVidaBoss.setText("Vida do boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
+		
+		lblVidaBoss.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelStatus.add(lblVidaBoss);
+		
+		lblMensagem = new JLabel("");
+		lblMensagem.setForeground(new Color(255, 255, 255));
+
+		lblMensagem.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelStatus.add(lblMensagem);
+		
+		
+		// ====== PAINEL AÇÕES =======
+		
+		btnAtacar = new JButton("Atacar");
 		btnAtacar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -100,11 +154,11 @@ public class TelaBatalha extends JFrame {
 				lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "</html>");
 			}
 		});
-		contentPane.setLayout(null);
-		contentPane.add(btnAtacar);
 
+		btnAtacar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelAcoes.add(btnAtacar);
 		btnCurar = new JButton("Curar");
-		btnCurar.setBounds(226, 145, 89, 23);
+		
 		btnCurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensagemCura = curarHeroi();
@@ -113,9 +167,11 @@ public class TelaBatalha extends JFrame {
 
 			}
 		});
-		contentPane.add(btnCurar);
-
+	
+		btnCurar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelAcoes.add(btnCurar);
 		btnDefender = new JButton("Defender");
+		
 		btnDefender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -131,71 +187,76 @@ public class TelaBatalha extends JFrame {
 				lblMensagem.setText("<html>" + mensagemDefender + "</html>");
 			}
 		});
-		btnDefender.setBounds(325, 145, 89, 23);
-		contentPane.add(btnDefender);
+		
+		btnDefender.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelAcoes.add(btnDefender);
+	
+		btnEspecial = new JButton("Especial");
+		btnEspecial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-		lblVidaHeroina = new JLabel("Vida da heroina: ");
-		lblVidaHeroina.setForeground(new Color(255, 255, 255));
-		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
-		lblVidaHeroina.setBounds(45, 48, 149, 14);
-		contentPane.add(lblVidaHeroina);
+				if (especialUsado) {
+					lblMensagem.setText("Você já usou o especial nessa batalha!");
+					return;
+				}
 
-		lblVidaBoss = new JLabel("vida do boss: ");
-		lblVidaBoss.setForeground(new Color(255, 255, 255));
-		lblVidaBoss.setBackground(new Color(255, 255, 255));
-		lblVidaBoss.setText("Vida do boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
-		lblVidaBoss.setBounds(45, 101, 123, 14);
-		contentPane.add(lblVidaBoss);
+				String mensagemEspecial = BatalhaService.especial(heroina, boss);
+				especialUsado = true;
+				atualizarTela();
 
-		lblMensagem = new JLabel("");
-		lblMensagem.setForeground(new Color(255, 255, 255));
-		lblMensagem.setBounds(38, 185, 317, 80);
-		contentPane.add(lblMensagem);
+				if (!boss.estaVivo()) {
+					lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + boss.getNome() + " morreu!</html>");
+					desativarBotoes();
+					return;
+				}
+
+				String mensagemBoss = batalhaService.atacar(boss, heroina);
+				atualizarTela();
+
+				if (!heroina.estaVivo()) {
+					lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "<br>" + heroina.getNome()
+							+ " morreu!</html>");
+					desativarBotoes();
+					return;
+				}
+
+				lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "</html>");
+			}
+
+		});
+	
+		btnEspecial.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelAcoes.add(btnEspecial);
+	
+		// ====== PAINEL NAVEGAÇÃO =======
+		
+		
+		
+
+		btnJogarNovamente = new JButton("Jogar Novamente");
+		btnJogarNovamente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaBatalha telaBatalha = new TelaBatalha(heroina);
+				telaBatalha.setVisible(true);
+				dispose();
+			}
+		});
+		btnJogarNovamente.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelNavegacao.add(btnJogarNovamente);
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaInicial telaInicial = new TelaInicial(heroina);
 				telaInicial.setVisible(true);
+				dispose();
 			}
 		});
-		btnVoltar.setBounds(10, 276, 89, 23);
-		contentPane.add(btnVoltar);
+	
+		btnVoltar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		painelNavegacao.add(btnVoltar);
+		
 
-		btnEspecial = new JButton("Especial");
-		btnEspecial.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-
-		        if (especialUsado) {
-		            lblMensagem.setText("Você já usou o especial nessa batalha!");
-		            return;
-		        }
-
-		        String mensagemEspecial = BatalhaService.especial(heroina, boss);
-		        especialUsado = true;
-		        atualizarTela();
-
-		        if (!boss.estaVivo()) {
-		            lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + boss.getNome() + " morreu!</html>");
-		            desativarBotoes();
-		            return;
-		        }
-
-		        String mensagemBoss = batalhaService.atacar(boss, heroina);
-		        atualizarTela();
-
-		        if (!heroina.estaVivo()) {
-		            lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "<br>" + heroina.getNome() + " morreu!</html>");
-		            desativarBotoes();
-		            return;
-		        }
-
-		        lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "</html>");
-		    }
-		   
-		});
-		btnEspecial.setBounds(127, 145, 89, 23);
-		contentPane.add(btnEspecial);
 	}
 
 	private void atualizarTela() {

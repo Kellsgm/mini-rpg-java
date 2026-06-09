@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import dao.PersonagemDAO;
 import model.Item;
 import model.Personagem;
+import model.PersonagemFactory;
 
 public class TelaInventario extends JFrame {
 
@@ -35,7 +36,7 @@ public class TelaInventario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Personagem heroinaTeste = new Personagem("Arqueira", 35, 5, 6, 6, 5, 15);
+					Personagem heroinaTeste = PersonagemFactory.criarArqueira("Bianca");
 					TelaInventario frame = new TelaInventario(heroinaTeste);
 					frame.setVisible(true);
 				} catch (Exception e) {

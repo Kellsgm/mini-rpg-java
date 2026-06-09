@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Personagem {
 
 	private String nome;
+	private String Classe;
 	private int vida;
 	private int vidaMaxima;
 	private int danoMinimo;
@@ -16,8 +17,9 @@ public class Personagem {
 	private Item itemEquipado;
 	private ArrayList<Item> inventario;
 
-	public Personagem(String nome, int vidaMaxima, int danoMinimo, int danoMaximo, int forca, int defesa, int moedas) {
+	public Personagem(String nome, String classe, int vidaMaxima, int danoMinimo, int danoMaximo, int forca, int defesa, int moedas) {
 		this.nome = nome;
+		this.Classe = classe;
 		this.vida = vidaMaxima;
 		this.vidaMaxima = vidaMaxima;
 		this.danoMaximo = danoMaximo;
@@ -26,6 +28,14 @@ public class Personagem {
 		this.defesa = defesa;
 		this.moedas = moedas;
 		inventario = new ArrayList<>();
+	}
+
+	public String getClasse() {
+		return Classe;
+	}
+
+	public void setClasse(String classe) {
+		Classe = classe;
 	}
 
 	public String getNome() {

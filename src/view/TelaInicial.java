@@ -78,8 +78,10 @@ public class TelaInicial extends JFrame {
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (heroina == null) {
-				    JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
-				    return;
+					JOptionPane.showMessageDialog(
+						    null,
+						    "Escolha uma personagem primeiro!"
+						);
 				}
 				TelaInventario telaInventario = new TelaInventario(heroina);
 				telaInventario.setVisible(true);
@@ -121,7 +123,7 @@ public class TelaInicial extends JFrame {
 		JButton btnPersonagens = new JButton("Personagens");
 		btnPersonagens.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPersonagens telaPersonagens = new TelaPersonagens();
+				TelaEscolhaClasse telaPersonagens = new TelaEscolhaClasse();
 				telaPersonagens.setVisible(true);				
 				
 			}

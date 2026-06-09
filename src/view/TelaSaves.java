@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,8 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import dao.PersonagemDAO;
+import model.Personagem;
 
 public class TelaSaves extends JFrame {
 
@@ -55,9 +59,9 @@ public class TelaSaves extends JFrame {
 		JLabel lblTitulo = new JLabel("Jogos Salvos");
 		lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JButton btnSlot1 = new JButton("Slot 1 - Vazio");
-		JButton btnSlot2 = new JButton("Slot 2 - Vazio");
-		JButton btnSlot3 = new JButton("Slot 3 - Vazio");
+		JButton btnSlot1 = new JButton(" Vazio");
+		JButton btnSlot2 = new JButton(" Vazio");
+		JButton btnSlot3 = new JButton(" Vazio");
 
 		btnSlot1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnSlot2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -69,6 +73,51 @@ public class TelaSaves extends JFrame {
 		painelCentro.add(btnSlot3);
 
 		contentPane.add(painelCentro, BorderLayout.CENTER);
+		PersonagemDAO dao = new PersonagemDAO();
+		ArrayList<Personagem> personagens = dao.listarPersonagens();
+
+		if (personagens.size() > 0) {
+			Personagem p = personagens.get(0);
+			btnSlot1.setText(p.getNome() + " • " + p.getClasse());
+
+			btnSlot1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial telaInicial = new TelaInicial(p);
+					telaInicial.setVisible(true);
+					dispose();
+				}
+
+			});
+		}
+		if (personagens.size() > 1) {
+			Personagem p = personagens.get(1);
+			btnSlot2.setText(p.getNome() + " • " + p.getClasse());
+			btnSlot2.setText(p.getNome() + " • " + p.getClasse());
+
+			btnSlot2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial telaInicial = new TelaInicial(p);
+					telaInicial.setVisible(true);
+					dispose();
+				}
+
+			});
+		}
+
+		if (personagens.size() > 2) {
+			Personagem p = personagens.get(2);
+			btnSlot3.setText(p.getNome() + " • " + p.getClasse());
+			btnSlot3.setText(p.getNome() + " • " + p.getClasse());
+
+			btnSlot3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial telaInicial = new TelaInicial(p);
+					telaInicial.setVisible(true);
+					dispose();
+				}
+
+			});
+		}
 
 		JPanel painelRodape = new JPanel();
 		painelRodape.setBackground(new Color(225, 208, 155));

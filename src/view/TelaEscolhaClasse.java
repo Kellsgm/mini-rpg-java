@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import model.Personagem;
 import model.PersonagemFactory;
 
-public class TelaPersonagens extends JFrame {
+public class TelaEscolhaClasse extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,7 +29,7 @@ public class TelaPersonagens extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPersonagens frame = new TelaPersonagens();
+					TelaEscolhaClasse frame = new TelaEscolhaClasse();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class TelaPersonagens extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaPersonagens() {
+	public TelaEscolhaClasse() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 588, 366);
 		contentPane = new JPanel();
@@ -49,55 +49,61 @@ public class TelaPersonagens extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblPersonagem = new JLabel("Escolha seu personagem: ");
 		lblPersonagem.setFont(new Font("Calibri", Font.BOLD, 13));
 		lblPersonagem.setBounds(121, 38, 254, 42);
 		contentPane.add(lblPersonagem);
-		
-		JButton btnArqueiro = new JButton("Arqueiro");
-		btnArqueiro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 heroina = PersonagemFactory.criarArqueira();
-					JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhido!");
-					TelaBatalha telaBatalha = new TelaBatalha(heroina);
-			        telaBatalha.setVisible(true);
 
-			        dispose();
-				
+		JButton btnArqueira = new JButton("Arqueira");
+		btnArqueira.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			new TelaCriarPersonagem("Arqueira");
+				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Arqueira");
+				telaCriarPersonagem.setVisible(true);
+				//JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
+			
+
+				dispose();
+
 			}
 		});
-		btnArqueiro.setBounds(190, 114, 169, 20);
-		contentPane.add(btnArqueiro);
-		
-		JButton btnGuerreiro = new JButton("Guerreiro");
-		btnGuerreiro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 heroina = PersonagemFactory.criarGuerreira();
-					JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhido!");
-					TelaBatalha telaBatalha = new TelaBatalha(heroina);
-			        telaBatalha.setVisible(true);
+		btnArqueira.setBounds(190, 114, 169, 20);
+		contentPane.add(btnArqueira);
 
-			        dispose();
+		JButton btnGuerreira = new JButton("Guerreira");
+		btnGuerreira.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				new TelaCriarPersonagem("Guerreira");
+				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Guerreira");
+				telaCriarPersonagem.setVisible(true);
+
+				//JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
+			
+	
+
+				dispose();
 			}
 		});
-		btnGuerreiro.setBounds(190, 158, 169, 20);
-		contentPane.add(btnGuerreiro);
-		
+		btnGuerreira.setBounds(190, 158, 169, 20);
+		contentPane.add(btnGuerreira);
+
 		JButton btnMaga = new JButton("Maga");
 		btnMaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 heroina = PersonagemFactory.criarMaga();
-					JOptionPane.showMessageDialog(null, heroina.getNome() + " escolhido!");
-					TelaBatalha telaBatalha = new TelaBatalha(heroina);
-			        telaBatalha.setVisible(true);
+				new TelaCriarPersonagem("Maga");
+				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Maga");
+				telaCriarPersonagem.setVisible(true);
+			//	JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
+			
 
-			        dispose();
+				dispose();
 			}
 		});
 		btnMaga.setBounds(190, 206, 170, 20);
 		contentPane.add(btnMaga);
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
