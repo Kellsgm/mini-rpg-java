@@ -100,7 +100,7 @@ public class TelaPrincipal extends JFrame {
 		lblWM.setAlignmentX(Component.CENTER_ALIGNMENT);
 		painelCentro.add(lblWM);
 
-		JButton btnJogar = new JButton("Jogar");
+		JButton btnJogar = new JButton("Novo Jogo");
 		btnJogar.setForeground(new Color(255, 255, 255));
 		btnJogar.setFont(new Font("Verdana", Font.ITALIC, 12));
 		btnJogar.setBorderPainted(false);
@@ -122,8 +122,8 @@ public class TelaPrincipal extends JFrame {
 		});
 		btnJogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial telaInicial = new TelaInicial();
-				telaInicial.setVisible(true);
+				TelaEscolhaClasse telaEscolhaClasse = new TelaEscolhaClasse();
+				telaEscolhaClasse.setVisible(true);
 				dispose();
 
 			}
@@ -134,7 +134,7 @@ public class TelaPrincipal extends JFrame {
 		btnJogar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		painelCentro.add(btnJogar);
 
-		JButton btnJogoSalvo = new JButton("Jogo salvo");
+		JButton btnJogoSalvo = new JButton("Continuação");
 		btnJogoSalvo.setForeground(new Color(255, 255, 255));
 		btnJogoSalvo.setFont(new Font("Verdana", Font.ITALIC, 12));
 		btnJogoSalvo.setBorderPainted(false);

@@ -160,6 +160,9 @@ public class Personagem {
 	    }
 	    return false;
 	}
+	public void restaurarVida() {
+	    this.vida = this.vidaMaxima;
+	}
 	}
 	
 

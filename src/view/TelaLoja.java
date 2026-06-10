@@ -37,7 +37,7 @@ public class TelaLoja extends JFrame {
 	public TelaLoja() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 637, 402);
-		setSize(450,300);
+		setSize(866, 643);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

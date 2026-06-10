@@ -1,11 +1,14 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,52 +45,53 @@ public class TelaEscolhaClasse extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaEscolhaClasse() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 588, 366);
+		setTitle("Seleção de clase");
+		setSize(866, 643);
+		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 64, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(20, 20));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
-		JLabel lblPersonagem = new JLabel("Escolha seu personagem: ");
+		JPanel painelStatus = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
+		painelStatus.setOpaque(false);
+
+		JLabel lblPersonagem = new JLabel("Escolha sua classe: ");
 		lblPersonagem.setFont(new Font("Calibri", Font.BOLD, 13));
-		lblPersonagem.setBounds(121, 38, 254, 42);
-		contentPane.add(lblPersonagem);
+
+		painelStatus.add(lblPersonagem);
+		contentPane.add(painelStatus, BorderLayout.NORTH);
+
+		JPanel painelCentro = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
+		painelCentro.setOpaque(false);
 
 		JButton btnArqueira = new JButton("Arqueira");
 		btnArqueira.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			new TelaCriarPersonagem("Arqueira");
+				new TelaCriarPersonagem("Arqueira");
 				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Arqueira");
 				telaCriarPersonagem.setVisible(true);
-				//JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
-			
-
 				dispose();
-
 			}
 		});
-		btnArqueira.setBounds(190, 114, 169, 20);
-		contentPane.add(btnArqueira);
+
+	
 
 		JButton btnGuerreira = new JButton("Guerreira");
 		btnGuerreira.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+
 				new TelaCriarPersonagem("Guerreira");
 				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Guerreira");
 				telaCriarPersonagem.setVisible(true);
-
-				//JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
-			
-	
-
 				dispose();
 			}
 		});
-		btnGuerreira.setBounds(190, 158, 169, 20);
-		contentPane.add(btnGuerreira);
+		
 
 		JButton btnMaga = new JButton("Maga");
 		btnMaga.addActionListener(new ActionListener() {
@@ -95,15 +99,18 @@ public class TelaEscolhaClasse extends JFrame {
 				new TelaCriarPersonagem("Maga");
 				TelaCriarPersonagem telaCriarPersonagem = new TelaCriarPersonagem("Maga");
 				telaCriarPersonagem.setVisible(true);
-			//	JOptionPane.showMessageDialog(null, "classe: " + heroina.getNome());
-			
-
 				dispose();
 			}
 		});
-		btnMaga.setBounds(190, 206, 170, 20);
-		contentPane.add(btnMaga);
+		painelCentro.add(btnArqueira);
+		painelCentro.add(btnGuerreira);
+		painelCentro.add(btnMaga);
 
+		contentPane.add(painelCentro, BorderLayout.CENTER);
+
+		JPanel painelSul = new JPanel(new FlowLayout(FlowLayout.LEFT, 40, 10));
+		painelSul.setOpaque(false);
+		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -112,8 +119,8 @@ public class TelaEscolhaClasse extends JFrame {
 				dispose();
 			}
 		});
-		btnVoltar.setBounds(10, 293, 89, 23);
-		contentPane.add(btnVoltar);
-
+	
+		painelSul.add(btnVoltar);
+		contentPane.add(painelSul, BorderLayout.SOUTH);
 	}
 }

@@ -1,18 +1,21 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import model.Personagem;
@@ -22,34 +25,31 @@ import service.BatalhaService;
 public class TelaBatalha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 	private JLabel lblMensagem;
 	private JLabel lblVidaHeroina;
 	private JLabel lblVidaBoss;
+
 	private Personagem heroina;
 	private Personagem boss;
 	private BatalhaService batalhaService;
+
 	private JButton btnJogarNovamente;
 	private JButton btnAtacar;
 	private JButton btnCurar;
 	private JButton btnDefender;
 	private JButton btnEspecial;
-	private boolean especialUsado = false;
-	private int pocoes = 3;
 	private JButton btnVoltar;
 
-	/**
-	 * Launch the application.
-	 */
-	// Método usado apenas para testes da TelaBatalha
+	private boolean especialUsado = false;
+	private int pocoes = 3;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
 					Personagem heroiTeste = PersonagemFactory.criarArqueira("Bianca");
-					Personagem boss = new Personagem("Carrasco", "Boss", 40, 5, 5, 5, 5, 0);
-
 					TelaBatalha frame = new TelaBatalha(heroiTeste);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -59,85 +59,96 @@ public class TelaBatalha extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaBatalha(Personagem heroina) {
 		this.heroina = heroina;
-
 		this.boss = new Personagem("Carrasco", "Boss", 50, 6, 10, 8, 6, 0);
 		this.batalhaService = new BatalhaService();
 
+		setTitle("Batalha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		setSize(866, 643);
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(121, 39, 4));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new GridBagLayout());
-
+		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		contentPane.setLayout(new BorderLayout(20, 20));
 		setContentPane(contentPane);
 
-		JPanel painelCentro = new JPanel();
-		JPanel painelNavegacao = new JPanel();
-		painelNavegacao.setBackground(new Color(121, 39, 4));
-		JPanel painelStatus = new JPanel();
-		painelStatus.setBackground(new Color(121, 39, 4));
-		JPanel painelAcoes = new JPanel();
-		painelAcoes.setBackground(new Color(121, 39, 4));
-		
-		contentPane.add(painelCentro);
+		JPanel painelStatus = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
+		painelStatus.setOpaque(false);
 
-		painelCentro.add(painelStatus);
-		painelCentro.add(painelAcoes);
-		painelCentro.add(Box.createVerticalGlue());
-		painelCentro.add(painelNavegacao);
-		painelCentro.setOpaque(false);
-		
-		painelCentro.setLayout(new BoxLayout(painelCentro, BoxLayout.Y_AXIS));
+		lblVidaHeroina = new JLabel();
+		lblVidaHeroina.setForeground(Color.WHITE);
+		lblVidaHeroina.setFont(new Font("Arial", Font.BOLD, 14));
 
-		
-		// ====== PAINEL STATUS =======
-		
-		lblVidaHeroina = new JLabel("Vida da heroina: ");
-		lblVidaHeroina.setForeground(new Color(255, 255, 255));
-		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
-		lblVidaHeroina.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblVidaBoss = new JLabel();
+		lblVidaBoss.setForeground(Color.WHITE);
+		lblVidaBoss.setFont(new Font("Arial", Font.BOLD, 14));
+
 		painelStatus.add(lblVidaHeroina);
-
-		lblVidaBoss = new JLabel("vida do boss: ");
-		lblVidaBoss.setForeground(new Color(255, 255, 255));
-		lblVidaBoss.setBackground(new Color(255, 255, 255));
-		lblVidaBoss.setText("Vida do boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
-		
-		lblVidaBoss.setAlignmentX(Component.CENTER_ALIGNMENT);
 		painelStatus.add(lblVidaBoss);
-		
-		lblMensagem = new JLabel("");
-		lblMensagem.setForeground(new Color(255, 255, 255));
 
-		lblMensagem.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelStatus.add(lblMensagem);
-		
-		
-		// ====== PAINEL AÇÕES =======
-		
+		contentPane.add(painelStatus, BorderLayout.NORTH);
+
+		JPanel painelCentro = new JPanel(new BorderLayout());
+		painelCentro.setOpaque(false);
+
+		lblMensagem = new JLabel("A batalha começou!");
+		lblMensagem.setForeground(Color.WHITE);
+		lblMensagem.setFont(new Font("Arial", Font.BOLD, 18));
+		lblMensagem.setHorizontalAlignment(SwingConstants.CENTER);
+
+		painelCentro.add(lblMensagem, BorderLayout.CENTER);
+		contentPane.add(painelCentro, BorderLayout.CENTER);
+
+		JPanel painelSul = new JPanel();
+		painelSul.setOpaque(false);
+		painelSul.setLayout(new BoxLayout(painelSul, BoxLayout.Y_AXIS));
+
+		JPanel painelAcoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+		painelAcoes.setOpaque(false);
+
+		JPanel painelNavegacao = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
+		painelNavegacao.setOpaque(false);
+
 		btnAtacar = new JButton("Atacar");
+		btnCurar = new JButton("Curar");
+		btnDefender = new JButton("Defender");
+		btnEspecial = new JButton("Especial");
+		btnJogarNovamente = new JButton("Jogar Novamente");
+		btnVoltar = new JButton("Voltar");
+
+		configurarBotao(btnAtacar);
+		configurarBotao(btnCurar);
+		configurarBotao(btnDefender);
+		configurarBotao(btnEspecial);
+		configurarBotao(btnJogarNovamente);
+		configurarBotao(btnVoltar);
+
+		painelAcoes.add(btnAtacar);
+		painelAcoes.add(btnCurar);
+		painelAcoes.add(btnDefender);
+		painelAcoes.add(btnEspecial);
+
+		painelNavegacao.add(btnJogarNovamente);
+		painelNavegacao.add(btnVoltar);
+
+		painelSul.add(painelAcoes);
+		painelSul.add(painelNavegacao);
+
+		contentPane.add(painelSul, BorderLayout.SOUTH);
+
 		btnAtacar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				String mensagem = batalhaService.atacar(heroina, boss);
-				System.out.println("Boss atacou! Vida heroi: " + heroina.getVida());
 				atualizarTela();
 
 				if (!boss.estaVivo()) {
-					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome() + " morreu!</html>");
-					desativarBotoes();
 					heroina.ganharMoedas(10);
-					lblMensagem.setText("<html>" + mensagem + "<br>" + boss.getNome()
-							+ " morreu!<br>Você ganhou 10 moedas!</html>");
+					lblMensagem.setText("<html><center>" + mensagem + "<br>" + boss.getNome()
+							+ " morreu!<br>Você ganhou 10 moedas!</center></html>");
+					desativarBotoes();
 					return;
 				}
 
@@ -145,58 +156,44 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "<br>" + heroina.getNome()
-							+ " morreu!</html>");
+					lblMensagem.setText("<html><center>" + mensagem + "<br>" + mensagemBoss + "<br>"
+							+ heroina.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
 
-				lblMensagem.setText("<html>" + mensagem + "<br>" + mensagemBoss + "</html>");
+				lblMensagem.setText("<html><center>" + mensagem + "<br>" + mensagemBoss + "</center></html>");
 			}
 		});
 
-		btnAtacar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelAcoes.add(btnAtacar);
-		btnCurar = new JButton("Curar");
-		
 		btnCurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensagemCura = curarHeroi();
-				lblMensagem.setText(mensagemCura);
+				lblMensagem.setText("<html><center>" + mensagemCura + "</center></html>");
 				atualizarTela();
-
 			}
 		});
-	
-		btnCurar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelAcoes.add(btnCurar);
-		btnDefender = new JButton("Defender");
-		
+
 		btnDefender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				String mensagemDefender = BatalhaService.defender(boss, heroina);
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html>" + mensagemDefender + "<br>" + heroina.getNome() + " morreu!</html>");
+					lblMensagem.setText("<html><center>" + mensagemDefender + "<br>"
+							+ heroina.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
 
-				lblMensagem.setText("<html>" + mensagemDefender + "</html>");
+				lblMensagem.setText("<html><center>" + mensagemDefender + "</center></html>");
 			}
 		});
-		
-		btnDefender.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelAcoes.add(btnDefender);
-	
-		btnEspecial = new JButton("Especial");
+
 		btnEspecial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				if (especialUsado) {
-					lblMensagem.setText("Você já usou o especial nessa batalha!");
+					lblMensagem.setText("<html><center>Você já usou o especial nessa batalha!</center></html>");
 					return;
 				}
 
@@ -205,7 +202,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!boss.estaVivo()) {
-					lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + boss.getNome() + " morreu!</html>");
+					lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>"
+							+ boss.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
@@ -214,37 +212,26 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "<br>" + heroina.getNome()
-							+ " morreu!</html>");
+					lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>" + mensagemBoss
+							+ "<br>" + heroina.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
 
-				lblMensagem.setText("<html>" + mensagemEspecial + "<br>" + mensagemBoss + "</html>");
+				lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>" + mensagemBoss + "</center></html>");
 			}
-
 		});
-	
-		btnEspecial.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelAcoes.add(btnEspecial);
-	
-		// ====== PAINEL NAVEGAÇÃO =======
-		
-		
-		
 
-		btnJogarNovamente = new JButton("Jogar Novamente");
 		btnJogarNovamente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaBatalha telaBatalha = new TelaBatalha(heroina);
-				telaBatalha.setVisible(true);
+				heroina.restaurarVida();
+
+				TelaBatalha novaTela = new TelaBatalha(heroina);
+				novaTela.setVisible(true);
 				dispose();
 			}
 		});
-		btnJogarNovamente.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelNavegacao.add(btnJogarNovamente);
 
-		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaInicial telaInicial = new TelaInicial(heroina);
@@ -252,16 +239,23 @@ public class TelaBatalha extends JFrame {
 				dispose();
 			}
 		});
-	
-		btnVoltar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		painelNavegacao.add(btnVoltar);
-		
 
+		atualizarTela();
+	}
+
+	private void configurarBotao(JButton botao) {
+		botao.setPreferredSize(new Dimension(140, 35));
+		botao.setFont(new Font("Arial", Font.BOLD, 13));
+		botao.setFocusPainted(false);
+		botao.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
 	private void atualizarTela() {
-		lblVidaHeroina.setText("Vida da heroína: " + heroina.getVida() + "/" + heroina.getVidaMaxima());
-		lblVidaBoss.setText("Vida da boss: " + boss.getVida() + "/" + boss.getVidaMaxima());
+		lblVidaHeroina.setText("❤ " + heroina.getNome() + ": "
+				+ heroina.getVida() + "/" + heroina.getVidaMaxima());
+
+		lblVidaBoss.setText("❤ " + boss.getNome() + ": "
+				+ boss.getVida() + "/" + boss.getVidaMaxima());
 	}
 
 	private void desativarBotoes() {
@@ -269,7 +263,6 @@ public class TelaBatalha extends JFrame {
 		btnCurar.setEnabled(false);
 		btnDefender.setEnabled(false);
 		btnEspecial.setEnabled(false);
-
 	}
 
 	private String curarHeroi() {
@@ -287,5 +280,4 @@ public class TelaBatalha extends JFrame {
 
 		return heroina.getNome() + " recuperou " + cura + " de vida! Poções restantes: " + pocoes;
 	}
-
 }

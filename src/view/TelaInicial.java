@@ -1,8 +1,9 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,95 +43,107 @@ public class TelaInicial extends JFrame {
 	 * 
 	 */
 	public TelaInicial(Personagem heroina) {
-	    this();
-	    this.heroina = heroina;
+		this();
+		this.heroina = heroina;
 	}
+
 	public TelaInicial() {
+
+		setTitle("Menu inicial");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 575, 356);
-		setSize(450, 300);
+		setSize(866, 643);
 		setLocationRelativeTo(null);
-		
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new GridBagLayout());
-		
+		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
-	
+
+//        JButton btnTelaInicio = new JButton("Tela Inicial");
+//		btnTelaInicio.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				TelaPrincipal telaPrincipal = new TelaPrincipal();
+//				telaPrincipal.setVisible(true);
+//				dispose();
+//			}
+//		});
+//		btnTelaInicio.setBounds(224, 126, 122, 23);
+//		contentPane.add(btnTelaInicio);
+		
+		JPanel painelCentro = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
+		painelCentro.setOpaque(false);
+
 		JButton btnBatalha = new JButton("Batalha");
 		btnBatalha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (heroina == null) {
-				    JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
-				    return;
+					JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
+					return;
 				}
 				heroina.setVida(heroina.getVidaMaxima());
 				TelaBatalha telaBatalha = new TelaBatalha(heroina);
 				telaBatalha.setVisible(true);
-			
+				dispose();
+
 			}
 		});
-		btnBatalha.setBounds(224, 126, 122, 23);
-		contentPane.add(btnBatalha);
+		painelCentro.add(btnBatalha);
+		contentPane.add(painelCentro, BorderLayout.CENTER);
 
 		JButton btnInventario = new JButton("Inventário");
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (heroina == null) {
-					JOptionPane.showMessageDialog(
-						    null,
-						    "Escolha uma personagem primeiro!"
-						);
+					JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
 				}
 				TelaInventario telaInventario = new TelaInventario(heroina);
 				telaInventario.setVisible(true);
-				
 
 			}
 		});
-		btnInventario.setBounds(224, 159, 122, 23);
-		contentPane.add(btnInventario);
-
+		painelCentro.add(btnInventario);
+		contentPane.add(painelCentro, BorderLayout.CENTER);
+		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-			    if (heroina == null) {
-			        JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
-			        return;
-			    }
+				if (heroina == null) {
+					JOptionPane.showMessageDialog(null, "Escolha uma personagem primeiro!");
+					return;
+				}
 
-			    PersonagemDAO dao = new PersonagemDAO();
-			    boolean sucesso;
+				PersonagemDAO dao = new PersonagemDAO();
+				boolean sucesso;
 
-			    if (heroina.getId() == 0) {
-			        sucesso = dao.salvar(heroina);
-			    } else {
-			        sucesso = dao.atualizar(heroina);
-			    }
+				if (heroina.getId() == 0) {
+					sucesso = dao.salvar(heroina);
+				} else {
+					sucesso = dao.atualizar(heroina);
+				}
 
-			    if (sucesso) {
-			        JOptionPane.showMessageDialog(null, "Personagem salvo com sucesso!");
-			    } else {
-			        JOptionPane.showMessageDialog(null, "Erro ao salvar personagem!");
-			    }
+				if (sucesso) {
+					JOptionPane.showMessageDialog(null, "Personagem salvo com sucesso!");
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro ao salvar personagem!");
+				}
 			}
 		});
-		btnSalvar.setBounds(224, 192, 122, 23);
-		contentPane.add(btnSalvar);
-		
-		JButton btnPersonagens = new JButton("Personagens");
-		btnPersonagens.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaEscolhaClasse telaPersonagens = new TelaEscolhaClasse();
-				telaPersonagens.setVisible(true);				
-				
-			}
-		});
-		btnPersonagens.setBounds(224, 63, 122, 20);
-		contentPane.add(btnPersonagens);
-		
+		painelCentro.add(btnSalvar);
+		contentPane.add(painelCentro, BorderLayout.CENTER);
+
+//		JButton btnPersonagens = new JButton("Personagens");
+//		btnPersonagens.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				TelaEscolhaClasse telaPersonagens = new TelaEscolhaClasse();
+//				telaPersonagens.setVisible(true);
+//
+//			}
+//		});
+//		btnPersonagens.setBounds(224, 63, 122, 20);
+//		contentPane.add(btnPersonagens);
+
 		JButton btnLoja = new JButton("Loja");
 		btnLoja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,8 +151,7 @@ public class TelaInicial extends JFrame {
 				telaLoja.setVisible(true);
 			}
 		});
-		btnLoja.setBounds(224, 96, 122, 20);
-		contentPane.add(btnLoja);
+		painelCentro.add(btnLoja);
 
 	}
 }

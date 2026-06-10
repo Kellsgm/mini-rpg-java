@@ -45,7 +45,9 @@ public class TelaSaves extends JFrame {
 	 */
 	public TelaSaves() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(866, 643);
+		setLocationRelativeTo(null);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(225, 208, 155));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

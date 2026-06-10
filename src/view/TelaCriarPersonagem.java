@@ -26,7 +26,7 @@ public class TelaCriarPersonagem extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private String ClasseEscolhida;
+	private String classeEscolhida;
 	private JTextField txtNome;
 
 	/**
@@ -47,14 +47,18 @@ public class TelaCriarPersonagem extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
 	 */
+
 	public TelaCriarPersonagem(String classeEscolhida) {
-		this.ClasseEscolhida = classeEscolhida;
+		this.classeEscolhida = classeEscolhida;
 		
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300)
-		;
+		setSize(866, 643);
+		setLocationRelativeTo(null);
+	
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(238, 200, 237));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,7 +77,7 @@ public class TelaCriarPersonagem extends JFrame {
 		painelBotoes.setBackground(new Color(225, 208, 155));
 		painelBotoes.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
-		JLabel lblClasse = new JLabel("Classe: " + ClasseEscolhida);
+		JLabel lblClasse = new JLabel("Classe: " + classeEscolhida);
 		lblClasse.setAlignmentX(Component.CENTER_ALIGNMENT);
 		painelCentro.add(lblClasse);
 		
@@ -107,14 +111,17 @@ public class TelaCriarPersonagem extends JFrame {
 				    return;
 				}
 
-				Personagem personagem = PersonagemFactory.criarPorClasse(ClasseEscolhida, nome);
+				Personagem personagem = PersonagemFactory.criarPorClasse(classeEscolhida, nome);
 
 				PersonagemDAO dao = new PersonagemDAO();
 				boolean sucesso = dao.salvar(personagem);
 
 				if (sucesso) {
 				    JOptionPane.showMessageDialog(null, "Personagem criado com sucesso!");
-				    // próxima tela depois
+				    TelaInicial telaInicial = new TelaInicial(personagem);
+					telaInicial.setVisible(true);
+					dispose();
+
 				} else {
 				    JOptionPane.showMessageDialog(null, "Erro ao criar personagem.");
 				}}
