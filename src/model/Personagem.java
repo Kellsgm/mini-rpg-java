@@ -16,6 +16,8 @@ public class Personagem {
 	private int id;
 	private Item itemEquipado;
 	private ArrayList<Item> inventario;
+	private int posicaoX;
+	private int posicaoY;
 
 	public Personagem(String nome, String classe, int vidaMaxima, int danoMinimo, int danoMaximo, int forca, int defesa, int moedas) {
 		this.nome = nome;
@@ -27,9 +29,12 @@ public class Personagem {
 		this.forca = forca;
 		this.defesa = defesa;
 		this.moedas = moedas;
+		this.posicaoX = 0;
+		this.posicaoY = 0;
 		inventario = new ArrayList<>();
 	}
 
+	// ========= GETTERS AND SETTERS ========
 	public String getClasse() {
 		return Classe;
 	}
@@ -113,7 +118,24 @@ public class Personagem {
 	public void setId(int id) {
 	    this.id = id;
 	}
+	
+	public int getPosicaoX() {
+		return posicaoX;
+	}
 
+	public void setPosicaoX(int posicaoX) {
+		this.posicaoX = posicaoX;
+	}
+
+	public int getPosicaoY() {
+		return posicaoY;
+	}
+
+	public void setPosicaoY(int posicaoY) {
+		this.posicaoY = posicaoY;
+	}
+
+	// ======== METODOS ==========
 	public boolean estaVivo() {
 		return vida > 0;
 
@@ -162,6 +184,42 @@ public class Personagem {
 	}
 	public void restaurarVida() {
 	    this.vida = this.vidaMaxima;
+	}
+	
+	public void moverDireita(Mapa mapa) {
+	    int novoX = posicaoX + 1;
+	    int novoY = posicaoY;
+
+	    if (mapa.posicaoValida(novoX, novoY)) {
+	        posicaoX = novoX;
+	        posicaoY = novoY;
+	    }
+	}
+	
+	public void moverEsquerda(Mapa mapa) {
+		int novoX = posicaoX -1;
+		int novoY = posicaoY;
+		if (mapa.posicaoValida(novoX, novoY)) {
+			posicaoX = novoX;
+			posicaoY = novoY;
+		}
+	}
+	
+	public void moverCima(Mapa mapa) {
+		int novoX = posicaoX;
+		int novoY = posicaoY - 1;
+		if (mapa.posicaoValida(novoX, novoY)) {
+			posicaoX = novoX;
+			posicaoY = novoY;
+		}
+	}
+	public void moverBaixo(Mapa mapa) {
+		int novoX = posicaoX;
+		int novoY = posicaoY + 1;
+		if (mapa.posicaoValida(novoX, novoY)) {
+			posicaoX = novoX;
+			posicaoY = novoY;
+		}
 	}
 	}
 	
