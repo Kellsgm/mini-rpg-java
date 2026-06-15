@@ -84,8 +84,8 @@ public class TelaSaves extends JFrame {
 
 			btnSlot1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial telaInicial = new TelaInicial(p);
-					telaInicial.setVisible(true);
+					TelaMapa telaMapa = new TelaMapa();
+					telaMapa.setVisible(true);
 					dispose();
 				}
 
@@ -98,8 +98,8 @@ public class TelaSaves extends JFrame {
 
 			btnSlot2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial telaInicial = new TelaInicial(p);
-					telaInicial.setVisible(true);
+					TelaMapa telaMapa = new TelaMapa();
+					telaMapa.setVisible(true);
 					dispose();
 				}
 
@@ -113,8 +113,8 @@ public class TelaSaves extends JFrame {
 
 			btnSlot3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial telaInicial = new TelaInicial(p);
-					telaInicial.setVisible(true);
+					TelaMapa telaMapa = new TelaMapa();
+					telaMapa.setVisible(true);
 					dispose();
 				}
 

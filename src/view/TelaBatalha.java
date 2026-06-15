@@ -35,12 +35,12 @@ public class TelaBatalha extends JFrame {
 	private Personagem boss;
 	private BatalhaService batalhaService;
 
-	private JButton btnJogarNovamente;
+
 	private JButton btnAtacar;
 	private JButton btnCurar;
 	private JButton btnDefender;
 	private JButton btnEspecial;
-	private JButton btnVoltar;
+	
 
 	private boolean especialUsado = false;
 	private int pocoes = 3;
@@ -116,23 +116,17 @@ public class TelaBatalha extends JFrame {
 		btnCurar = new JButton("Curar");
 		btnDefender = new JButton("Defender");
 		btnEspecial = new JButton("Especial");
-		btnJogarNovamente = new JButton("Jogar Novamente");
-		btnVoltar = new JButton("Voltar");
 
 		configurarBotao(btnAtacar);
 		configurarBotao(btnCurar);
 		configurarBotao(btnDefender);
 		configurarBotao(btnEspecial);
-		configurarBotao(btnJogarNovamente);
-		configurarBotao(btnVoltar);
+	
 
 		painelAcoes.add(btnAtacar);
 		painelAcoes.add(btnCurar);
 		painelAcoes.add(btnDefender);
 		painelAcoes.add(btnEspecial);
-
-		painelNavegacao.add(btnJogarNovamente);
-		painelNavegacao.add(btnVoltar);
 
 		painelSul.add(painelAcoes);
 		painelSul.add(painelNavegacao);
@@ -156,8 +150,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html><center>" + mensagem + "<br>" + mensagemBoss + "<br>"
-							+ heroina.getNome() + " morreu!</center></html>");
+					lblMensagem.setText("<html><center>" + mensagem + "<br>" + mensagemBoss + "<br>" + heroina.getNome()
+							+ " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
@@ -180,8 +174,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html><center>" + mensagemDefender + "<br>"
-							+ heroina.getNome() + " morreu!</center></html>");
+					lblMensagem.setText("<html><center>" + mensagemDefender + "<br>" + heroina.getNome()
+							+ " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
@@ -202,8 +196,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!boss.estaVivo()) {
-					lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>"
-							+ boss.getNome() + " morreu!</center></html>");
+					lblMensagem.setText(
+							"<html><center>" + mensagemEspecial + "<br>" + boss.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
@@ -212,8 +206,8 @@ public class TelaBatalha extends JFrame {
 				atualizarTela();
 
 				if (!heroina.estaVivo()) {
-					lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>" + mensagemBoss
-							+ "<br>" + heroina.getNome() + " morreu!</center></html>");
+					lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>" + mensagemBoss + "<br>"
+							+ heroina.getNome() + " morreu!</center></html>");
 					desativarBotoes();
 					return;
 				}
@@ -221,26 +215,6 @@ public class TelaBatalha extends JFrame {
 				lblMensagem.setText("<html><center>" + mensagemEspecial + "<br>" + mensagemBoss + "</center></html>");
 			}
 		});
-
-		btnJogarNovamente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				heroina.restaurarVida();
-
-				TelaBatalha novaTela = new TelaBatalha(heroina);
-				novaTela.setVisible(true);
-				dispose();
-			}
-		});
-
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaInicial telaInicial = new TelaInicial(heroina);
-				telaInicial.setVisible(true);
-				dispose();
-			}
-		});
-
-		atualizarTela();
 	}
 
 	private void configurarBotao(JButton botao) {
@@ -251,11 +225,9 @@ public class TelaBatalha extends JFrame {
 	}
 
 	private void atualizarTela() {
-		lblVidaHeroina.setText("❤ " + heroina.getNome() + ": "
-				+ heroina.getVida() + "/" + heroina.getVidaMaxima());
+		lblVidaHeroina.setText("❤ " + heroina.getNome() + ": " + heroina.getVida() + "/" + heroina.getVidaMaxima());
 
-		lblVidaBoss.setText("❤ " + boss.getNome() + ": "
-				+ boss.getVida() + "/" + boss.getVidaMaxima());
+		lblVidaBoss.setText("❤ " + boss.getNome() + ": " + boss.getVida() + "/" + boss.getVidaMaxima());
 	}
 
 	private void desativarBotoes() {

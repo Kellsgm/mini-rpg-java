@@ -3,9 +3,10 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Mapa {
-
+	private ArrayList<Inimigo> inimigos = new ArrayList<>();
     private int[][] casas = new int[30][30];
 
     public void carregarMapa(String caminhoArquivo) {
@@ -20,10 +21,14 @@ public class Mapa {
 
                 for (int coluna = 0; coluna < linha.length(); coluna++) {
 
-                    casas[numeroLinha][coluna] =
-                            Character.getNumericValue(
-                                    linha.charAt(coluna));
+                    int valor = Character.getNumericValue(linha.charAt(coluna));
 
+                    if (valor == 4) {
+                        inimigos.add(new Inimigo(coluna, numeroLinha));
+                        casas[numeroLinha][coluna] = 0;
+                    } else {
+                        casas[numeroLinha][coluna] = valor;
+                    }
                 }
 
                 numeroLinha++;
@@ -37,6 +42,10 @@ public class Mapa {
     public int getCasa(int x, int y) {
         return casas[y][x];
     }
+    public ArrayList<Inimigo> getInimigos() {
+        return inimigos;
+    }
+    
 
     public boolean posicaoValida(int x, int y) {
 
@@ -52,4 +61,6 @@ public class Mapa {
 
         return casas[y][x] != 1;
     }
+  
+    
 }

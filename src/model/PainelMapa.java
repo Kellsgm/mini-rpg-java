@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import view.TelaLoja;
+
 public class PainelMapa extends JPanel {
 
 	private Personagem heroina;
@@ -18,28 +20,39 @@ public class PainelMapa extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	    super.paintComponent(g);
 
-		int tamanhoCasa = 50;
+	    int tamanhoCasa = 50;
 
-		for (int linha = 0; linha < 30; linha++) {
-			for (int coluna = 0; coluna < 30; coluna++) {
+	    for (int linha = 0; linha < 30; linha++) {
+	        for (int coluna = 0; coluna < 30; coluna++) {
 
-				int x = coluna * tamanhoCasa;
-				int y = linha * tamanhoCasa;
+	            int x = coluna * tamanhoCasa;
+	            int y = linha * tamanhoCasa;
 
-				g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+	            if (mapa.getCasa(coluna, linha) == 1) {
+	                g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
+	            }
 
-				if (mapa.getCasa(coluna, linha) == 1) {
-					g.fillRect(x, y, tamanhoCasa, tamanhoCasa);
-				}
+	            if (mapa.getCasa(coluna, linha) == 3) {
+	                g.drawString("LOJA", x + 8, y + 25);
+	            }
 
-				g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
-				int xHeroina = heroina.getPosicaoX() * tamanhoCasa;
-				int yHeroina = heroina.getPosicaoY() * tamanhoCasa;
+	            g.drawRect(x, y, tamanhoCasa, tamanhoCasa);
+	        }
+	    }
 
-				g.fillRect(xHeroina, yHeroina, tamanhoCasa, tamanhoCasa);
-			}
-		}
+	    for (Inimigo inimigo : mapa.getInimigos()) {
+	        int xInimigo = inimigo.getPosicaoX() * tamanhoCasa;
+	        int yInimigo = inimigo.getPosicaoY() * tamanhoCasa;
+
+	        g.fillOval(xInimigo, yInimigo, tamanhoCasa, tamanhoCasa);
+	    }
+
+	    int xHeroina = heroina.getPosicaoX() * tamanhoCasa;
+	    int yHeroina = heroina.getPosicaoY() * tamanhoCasa;
+
+	    g.fillRect(xHeroina, yHeroina, tamanhoCasa, tamanhoCasa);
+	
 	}
 }

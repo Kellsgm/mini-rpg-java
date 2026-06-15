@@ -114,8 +114,8 @@ public class TelaEscolhaClasse extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial telaInicial = new TelaInicial(heroina);
-				telaInicial.setVisible(true);
+				TelaPrincipal telaPrincipal= new TelaPrincipal();
+				telaPrincipal.setVisible(true);
 				dispose();
 			}
 		});

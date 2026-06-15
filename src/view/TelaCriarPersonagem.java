@@ -90,15 +90,15 @@ public class TelaCriarPersonagem extends JFrame {
 		contentPane.add(painelBotoes, BorderLayout.SOUTH);
 		
 	
-		JButton btnVoltar = new JButton ("voltar");
-		btnVoltar.addActionListener(new ActionListener (){
-			public void actionPerformed(ActionEvent e) {
-				TelaEscolhaClasse telaEscolhaClasse = new TelaEscolhaClasse();
-				telaEscolhaClasse.setVisible(true);
-				dispose();
-			}
-		});
-		painelBotoes.add(btnVoltar);
+//		JButton btnVoltar = new JButton ("voltar");
+//		btnVoltar.addActionListener(new ActionListener (){
+//			public void actionPerformed(ActionEvent e) {
+//				TelaEscolhaClasse telaEscolhaClasse = new TelaEscolhaClasse();
+//				telaEscolhaClasse.setVisible(true);
+//				dispose();
+//			}
+//		});
+//		painelBotoes.add(btnVoltar);
 	
 		
 		JButton btnCriarPersonagem = new JButton("Criar personagem");
@@ -118,8 +118,9 @@ public class TelaCriarPersonagem extends JFrame {
 
 				if (sucesso) {
 				    JOptionPane.showMessageDialog(null, "Personagem criado com sucesso!");
-				    TelaInicial telaInicial = new TelaInicial(personagem);
-					telaInicial.setVisible(true);
+					TelaMapa telaMapa = new TelaMapa();
+					telaMapa.setVisible(true);
+				
 					dispose();
 
 				} else {

@@ -108,8 +108,7 @@ public class TelaInventario extends JFrame {
 
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial telaInicial = new TelaInicial(heroina);
-				telaInicial.setVisible(true);
+			
 				dispose();
 			}
 		});
